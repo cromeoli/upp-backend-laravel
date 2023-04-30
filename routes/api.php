@@ -19,4 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get("/types", "App\Http\Controllers\TypesController@getAllTypes")->middleware('auth:sanctum');
+
+// User
+Route::post("/login", "App\Http\Controllers\UserController@login");
 Route::post("/register", "App\Http\Controllers\UserController@register");
+Route::post("/logout", "App\Http\Controllers\UserController@logout")->middleware('auth:sanctum');

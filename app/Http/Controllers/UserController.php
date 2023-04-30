@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -23,6 +24,30 @@ class UserController extends Controller
             "token"=>$token
         ]);
 
+    }
+
+    public function login(Request $request){
+        if(!Auth::attempt($request->only('email', 'password'))){
+            return response()->json([
+                'message'=>'Invalid login details'
+            ], 401);
+        }
+
+        $user = Auth::user();
+        $token = $user->createToken('authToken')->plainTextToken;
+
+        return response()->json([
+            "user"=>$user,
+            "token"=>$token
+        ]);
+    }
+
+    public function logout(Request $request): array
+    {
+        auth()->user()->tokens()->delete();
+        return [
+            'message'=>'Logged out'
+        ];
     }
 
 
