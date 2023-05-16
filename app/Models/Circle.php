@@ -11,6 +11,7 @@ class Circle extends Model
     use HasFactory;
     protected $fillable = [
         'name',
+        'creator_id',
         'description',
         'is_private',
         'pass'
@@ -23,5 +24,17 @@ class Circle extends Model
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    // relacion con Circle_has_user
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'circle_has_user', 'circle_id', 'user_id');
+    }
+
+    // relacion con circle y creator_id
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'creator_id');
     }
 }
