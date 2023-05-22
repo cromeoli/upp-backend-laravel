@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get("/types", "App\Http\Controllers\TypesController@getAllTypes")->middleware('auth:sanctum');
 
-// User
+////////////////////////// User
 //Route group /api/user
 Route::group(['prefix' => 'user'], function () {
     Route::post("/login", "App\Http\Controllers\UserController@login");
@@ -35,7 +35,7 @@ Route::group(['prefix' => 'user'], function () {
     });
 });
 
-// Circle
+//////////////////////// Circle
 //Route group /api/circle
 Route::group(['prefix' => 'circle'], function () {
     Route::get("/circles", "App\Http\Controllers\CircleController@getAllCircles");
