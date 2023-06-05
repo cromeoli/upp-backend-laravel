@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 class CircleController extends Controller
 {
     // Endpoint to create a circle
+
+
+    /* Pondría en este círculo que no se pudiera crear un círculo que se llame
+    "Global"... pero realmente... el Id de global es lo que importa. Praise the id.
+    Diferenciaré al círculo global en el frontend mediante una marca definida por su
+    id.
+    */
     public function createCircle(Request $request){
         // If the fields are not filled, return an error with a message
         if($request->name == null || $request->description == null){
@@ -42,6 +49,14 @@ class CircleController extends Controller
         $circle = Circle::find($id);
         return response()->json([
             "circle" => $circle
+        ]);
+    }
+
+    // get circles the user has created
+    public function getCreatedCircles(){
+        $circles = Circle::where("creator_id", auth()->user()->id)->get();
+        return response()->json([
+            "circles"=>$circles
         ]);
     }
 

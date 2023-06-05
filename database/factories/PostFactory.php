@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Type;
+use App\Models\Circle;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,14 +17,21 @@ class PostFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Post::class;
+
     public function definition(): array
     {
+        $type = $this->faker->numberBetween(1, 2);
+
         return [
-            'content' => $this->faker->paragraph(),
+            'post_content' => ($type === 2)
+                ? $this->faker->imageUrl()
+                : $this->faker->realText(222),
             'in_heaven'=> $this->faker->boolean(),
-            'type_id' => 1,
-            'user_id' => 1,
-            'circle_id' => 1,
+            // I only want to test with type id of text and image
+            'type' => $type,
+            'user_id' => User::all()->random()->id,
+            'circle_id' => Circle::all()->random()->id,
         ];
     }
 }

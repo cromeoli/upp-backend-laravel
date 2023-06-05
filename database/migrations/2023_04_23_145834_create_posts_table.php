@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('post', function (Blueprint $table) {
             $table->increments("id");
-            $table->string("content", 222);
+            $table->string("post_content", 222);
             $table->integer("type")->unsigned();
             $table->foreign("type")->references("id")->on("type");
-            $table->integer("in_heaven");
+            $table->integer("in_heaven")->default(0);
             $table->integer("circle_id")->unsigned();
             $table->foreign("circle_id")->references("id")->on("circle");
             $table->integer("user_id")->unsigned();

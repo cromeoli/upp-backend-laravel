@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Circle;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,10 @@ class UserController extends Controller
         ]);
 
         $token = $user->createToken('authToken')->plainTextToken;
+
+        // Join the user to the circle globaL
+        $circle = Circle::where("name", "global")->first();
+        $circle->users()->attach($user->id);
 
         return response()->json([
             "user"=>$user,
@@ -95,32 +100,38 @@ class UserController extends Controller
         ]);
     }
 
+    //get all user from one circle by circle_id
+    public function getUsersByCircle($id){
+        $circle = Circle::find($id);
+        $users = $circle->users;
+        return response()->json([
+            "users"=>$users
+        ]);
+    }
+
+    //Endpoint to delete a user, only the auth user can delete itself
     public function deleteUser(Request $request){
-        $user = User::find($request->id);
+        $user = auth()->user();
         $user->delete();
         return response()->json([
-            "user"=>$user,
+            "message"=>"User deleted",
         ]);
     }
 
-    public function searchUser(Request $request){
-        $users = User::where('nickname', 'like', '%'.$request->nickname.'%')->get();
+    public function getUserByNickname($nickname){
+        $exists = User::where('nickname', $nickname)->exists();
+
         return response()->json([
-            "users"=>$users,
+            $exists
         ]);
+
     }
 
-    public function getUserByNickname(Request $request){
-        $user = User::where('nickname', $request->nickname)->first();
-        return response()->json([
-            "user"=>$user,
-        ]);
-    }
+    public function getUserByEmail($email) {
+        $exists = User::where('email', $email)->exists();
 
-    public function getUserByEmail(Request $request){
-        $user = User::where('email', $request->email)->first();
         return response()->json([
-            "user"=>$user,
+            $exists
         ]);
     }
 
