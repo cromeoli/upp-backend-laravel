@@ -1,4 +1,9 @@
 #!/bin/bash
+
+sudo apt-get install composer install
+sudo apt-get install php8.1-curl
+sudo apt-get install php-dom
+
 echo "================================"
 echo "Realizando composer install..."
 echo "================================"
@@ -55,7 +60,7 @@ if [ "$all_containers_running" = true ]; then
   echo "================================"
   echo "Contenedores activos, realizando migraciones."
   echo "================================"
-  
+
   sleep 2
   cd ..
   cd upp-backend-laravel/
@@ -66,3 +71,4 @@ else
   echo "No todos los contenedores están activos."
 fi
 
+./vendor/bin/sail artisan key:generate
