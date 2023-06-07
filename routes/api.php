@@ -56,18 +56,6 @@ Route::group(['prefix' => 'circle'], function () {
     });
 });
 
-// CircleHasUser
-//Route group /api/circleHasUser
-Route::group(['prefix' => 'circleHasUser'], function () {
-    Route::get("/getCircles", "App\Http\Controllers\CircleHasUserController@getCircles");
-    Route::get("/getUsers", "App\Http\Controllers\CircleHasUserController@getUsers");
-    // group the middleware routes
-    Route::group(['middleware' => 'auth:sanctum'], function () {
-        Route::post("/addUser", "App\Http\Controllers\CircleHasUserController@addUser");
-        Route::delete("/removeUser", "App\Http\Controllers\CircleHasUserController@removeUser");
-    });
-});
-
 //////////////////////// Post
 /// Route group URL --->  /api/post
 Route::group(['prefix' => 'post'], function () {

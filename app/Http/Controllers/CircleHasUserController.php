@@ -47,7 +47,7 @@ class CircleHasUserController extends Controller
 
         $circle->users()->attach(auth()->user()->id);
         return response()->json([
-            "message"=>"Welcome to the circle".$circle->name
+            "message"=>"Welcome to the circle ".$circle->name
         ]);
     }
 
