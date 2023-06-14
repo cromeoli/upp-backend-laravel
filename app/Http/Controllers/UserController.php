@@ -86,10 +86,27 @@ class UserController extends Controller
         ]);
     }
 
-    public function getUser(Request $request){
-        $user = User::find($request->id);
+    // function to verify token
+    public function verifyToken(Request $request){
+        $user = auth()->user();
+
+        // if the token is valid, return the user else return not authorized with code 401
+        if($user){
+            return response()->json([
+                "user"=>$user
+            ]);
+        }else{
+            return response()->json([
+                "message"=>"Not authorized"
+            ], 401);
+        }
+    }
+
+    // get user by id
+    public function getUser($id) {
+        $user = User::find($id);
         return response()->json([
-            "user"=>$user,
+            "user" => $user
         ]);
     }
 

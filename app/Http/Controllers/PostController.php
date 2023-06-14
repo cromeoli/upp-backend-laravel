@@ -62,7 +62,7 @@ class PostController extends Controller
 
     // get all posts from a circle
     public function getPostsByCircle($id){
-        $posts = Post::where('circle_id', $id)->get();
+        $posts = Post::with('user')->where('circle_id', $id)->get();
         return response()->json([
             "posts"=>$posts
         ]);

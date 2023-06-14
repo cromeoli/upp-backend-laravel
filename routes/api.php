@@ -28,10 +28,11 @@ Route::group(['prefix' => 'user'], function () {
     Route::get("/checkNickname/{nickname}", "App\Http\Controllers\UserController@getUserByNickname");
     Route::get("/checkEmail/{email}", "App\Http\Controllers\UserController@getUserByEmail");
     Route::get("/usersByCircle/{id}", "App\Http\Controllers\UserController@getUsersByCircle");
-
+    Route::get("/user/{id}", "App\Http\Controllers\UserController@getUser");
     // group the middleware routes
     Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post("/logout", "App\Http\Controllers\UserController@logout");
+        Route::post("/verify", "App\Http\Controllers\UserController@verifyToken");
         Route::put("/modifyUser", "App\Http\Controllers\UserController@modifyUser");
         Route::get("/getUser", "App\Http\Controllers\UserController@getUser");
         Route::get("/users", "App\Http\Controllers\UserController@getAllUsers");

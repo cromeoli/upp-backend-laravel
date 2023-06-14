@@ -30,6 +30,8 @@ class CircleController extends Controller
             "creator_id"=>auth()->user()->id
             // Future implementation of is_private and pass
         ]);
+
+        $circle->users()->attach(auth()->user()->id);
         return response()->json([
             "circle"=>$circle
         ]);
