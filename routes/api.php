@@ -66,7 +66,7 @@ Route::group(['prefix' => 'post'], function () {
     // group the middleware routes
     Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post("/createPost", "App\Http\Controllers\PostController@createPost");
-        Route::post('/createImagePost', 'App\Http\Controllers\PostController@uploadImage');
+        Route::post('/createImagePost', 'App\Http\Controllers\PostController@uploadImage')->middleware('cors');
         Route::delete("/deletePost/{id}", "App\Http\Controllers\PostController@deletePost");
     });
 });
