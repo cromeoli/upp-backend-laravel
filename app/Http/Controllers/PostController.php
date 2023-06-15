@@ -43,6 +43,32 @@ class PostController extends Controller
         ]);
     }
 
+    // function to receive a image from the body and save it in the public folder
+    public function uploadImage(Request $request){
+        // if there is no image in the request, return an error
+        if(!$request->hasFile('image')){
+            return response()->json([
+                "message"=>"No se ha encontrado ninguna imagen"
+            ], 400);
+        }
+
+        $image = $request->file('image');
+        $imageName = time().'.'.$image->extension();
+        $image->move(public_path('images'), $imageName);
+
+        // create a new post with path of the image in the post_content
+        $post = Post::create([
+            "post_content"=>"/images/".$imageName,
+            "type"=>2,
+            "user_id"=>auth()->user()->id,
+            "circle_id"=>$request->circle_id
+        ]);
+
+        return response()->json([
+            "post"=>$post
+        ]);
+    }
+
     // delete post by id
     public function deletePost($id){
         // set that only the creator of the post can delete it
