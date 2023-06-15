@@ -54,7 +54,10 @@ class PostController extends Controller
 
         $image = $request->file('image');
         $imageName = time().'.'.$image->extension();
-        $image->move(public_path('images'), $imageName);
+        // in my hosting, the is not writing permissions in the public folder, so I have to use the storage folder
+        // $image->move(public_path('images'), $imageName);
+        $image->move(storage_path('app/public/images'), $imageName);
+        //$image->move(public_path('images'), $imageName);
 
         // create a new post with path of the image in the post_content
         $post = Post::create([
