@@ -1,0 +1,8 @@
+name: upp-backend
+
+# ...
+
+scripts:
+
+  # Script para crear el enlace simbólico storage:link
+  postinstall: "php artisan storage:link"
