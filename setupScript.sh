@@ -66,6 +66,7 @@ if [ "$all_containers_running" = true ]; then
   cd upp-backend-laravel/
 
   ./vendor/bin/sail artisan migrate
+  ./vendor/bin/sail artisan migrate --seed
 
 else
   echo "No todos los contenedores están activos."
