@@ -72,3 +72,4 @@ else
 fi
 
 ./vendor/bin/sail artisan key:generate
+./vendor/bin/sail artisan storage:link
